@@ -1,0 +1,48 @@
+.swal2-popup {
+    font-size: 1.6rem !important;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+.select2-check-box {
+    position: relative;
+}
+
+.select2-wrapper {
+    position: absolute;
+    background-color: white;
+    width: calc(100% - 30px);
+    border: 2px #cdcdcd solid;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 1px;
+    z-index: 2;
+}
+
+.select2-item {
+    text-transform: capitalize;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.select2-item:hover {
+    background-color: #007aff;
+    color: #fefefe;
+}
+
+.odd {
+    background-color: #d2d6de !important;
+}
+
+table.dataTable>thead>tr,
+table.dataTable>tfoot>tr {
+    background-color: #008080;
+    color: #fefefe;
+}
+
+.td-row {
+    display: flex;
+    justify-content: space-between;
+}

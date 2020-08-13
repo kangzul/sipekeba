@@ -133,7 +133,7 @@ function makedt(tableID, url, additional = false) {
         "serverSide": true,
         "order": [],
         "ajax": {
-            "url": generateLink(url, "table"),
+            "url": generateLink(url, "main"),
             "type": "post"
         }
     };

@@ -13,46 +13,30 @@ class Sipekeba extends MY_Model
         $this->output->set_content_type('application/json')->set_output(json_encode($result));
     }
 
-    public function login_authentication()
+    public function login_authentication($input)
     {
-        $this->db->select('*')->from;
-        
-        $this->db->select('u.*,uc.control_name,ug.group_id,ug.group_name')->from('users u')
-            ->join('user_controls uc', 'u.user_control = uc.control_id')
-            ->join('user_groups ug', 'uc.group_id = ug.group_id')
-            ->where('u.user_name', $input->username)
-            ->where('u.is_deleted', 0);
-        $query = $this->db->get();
-        $data_user = $query->row();
-        $count_user = $query->num_rows();
-        if ($count_user > 0) {
-            if (password_verify($input->password, $data_user->user_password)) {
+        $this->db->select('*')->from('master_admin')->where(['username' => $input['username'], 'status' => 1])->limit(1);
+        $row = $this->db->get()->row();
+        if ($row) {
+            if (password_verify($input['password'], $row->password)) {
                 $session = [
-                    'user_id'         => $data_user->user_id,
-                    'user_name'       => $data_user->user_name,
-                    'real_name'       => $data_user->user_full_name,
-                    'level'           => $data_user->group_id,
-                    'level_name'      => $data_user->group_name,
-                    'control'         => $data_user->user_control,
-                    'control_name'    => $data_user->control_name,
-                    'logged_in'       => true,
+                    'user_id' => $row->id_user,
+                    'real_name' => $row->real_name,
+                    'logged_in' => true,
                 ];
-                $this->db->update('users', ['last_login' => date('Y-m-d H:i:s')], ['user_id' => $data_user->user_id]);
                 $this->session->set_userdata($session);
-                $response->success = true;
-                $response->message = "Please wait while loading..";
+                $this->swal('Sukses', 'success', 'Login Sukses, Tunggu Sebentar...');
             } else {
-                $response->message = "Incorrectly Password, Please Try Again or Forgot Password";
+                $this->swal('Login Gagal', 'error', 'Password yang anda masukkan tidak sesuai');
             }
         } else {
-            $response->message = "User Data Not Found";
+            $this->swal('Login Gagal', 'error', 'Data Tidak Ditemukan');
         }
-        $this->makejson($response);
     }
 
     public function get_user_list()
     {
-        return $this->db->get('master_users')->result();
+        return $this->db->get('master_admin')->result();
     }
 
     public function tambah_data_admin($input)
@@ -63,13 +47,121 @@ class Sipekeba extends MY_Model
             'email'      => $input->email,
             'password'   => password_hash($input->password, PASSWORD_DEFAULT),
             'status'     => 1,
-            'created_at' => date('Y-m-d H: i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
         ];
-        $this->db->insert('master_users', $data);
+        $this->db->insert('master_admin', $data);
         if ($this->db->affected_rows() > 0) {
-            $this->swal('Berhasil','success', 'Berhasl tambah admin baru');
+            $this->swal('Berhasil', 'success', 'Berhasl tambah admin baru');
         } else {
-            $this->swal('Gagal','error', 'Gagal tambah admin baru');
+            $this->swal('Gagal', 'error', 'Gagal tambah admin baru');
+        }
+    }
+
+    public function get_layanan_list()
+    {
+        return $this->db->get_where('master_layanan', ['deleted_at' => null])->result();
+    }
+
+    public function tambah_data_layanan($input)
+    {
+        $data = [
+            'nama_layanan' => strtoupper($input->nama_layanan),
+            'keterangan'   => $input->keterangan,
+            'status'       => $input->status,
+            'created_at'   => date('Y-m-d H:i:s'),
+        ];
+        $this->db->insert('master_layanan', $data);
+        if ($this->db->affected_rows() > 0) {
+            $this->swal('Berhasil', 'success', 'Berhasl tambah layanan baru');
+        } else {
+            $this->swal('Gagal', 'error', 'Gagal tambah layanan baru');
+        }
+    }
+
+    public function hapus_layanan($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('master_layanan', ['deleted_at' => date('Y-m-d H:i:s')]);
+        if ($this->db->affected_rows() > 0) {
+            $this->swal('Berhasil', 'success', 'Berhasl hapus layanan');
+        } else {
+            $this->swal('Gagal', 'error', 'Gagal hapus layanan');
+        }
+    }
+
+    public function get_layanan_detail($id)
+    {
+        return $this->db->get_where('master_layanan', ['id' => $id])->row();
+    }
+
+    public function update_data_layanan($input)
+    {
+        $data = [
+            'nama_layanan' => strtoupper($input->nama_layanan),
+            'keterangan'   => $input->keterangan,
+            'status'       => $input->status,
+        ];
+        $this->db->where('id', $input->id);
+        $this->db->update('master_layanan', $data);
+        if ($this->db->affected_rows() > 0) {
+            $this->swal('Berhasil', 'success', 'Berhasl update layanan');
+        } else {
+            $this->swal('Gagal', 'error', 'Tidak ada perubahan data');
+        }
+    }
+
+    public function get_syarat_layanan_list($id)
+    {
+        return $this->db->get_where('master_syarat_layanan', ['id_layanan' => $id, 'deleted_at' => null])->result();
+    }
+
+    public function tambah_data_syarat_layanan($input)
+    {
+        $data = [
+            'id_layanan' => $input->id_layanan,
+            'syarat'     => $input->nama_syarat,
+            'keterangan' => $input->keterangan,
+            'status'     => $input->status,
+            'created_at' => date('Y-m-d H:i:s'),
+        ];
+        $this->db->insert('master_syarat_layanan', $data);
+        if ($this->db->affected_rows() > 0) {
+            $this->swal('Berhasil', 'success', 'Berhasl tambah syarat layanan baru');
+        } else {
+            $this->swal('Gagal', 'error', 'Gagal tambah syarat layanan baru');
+        }
+    }
+
+    public function hapus_syarat_layanan($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('master_syarat_layanan', ['deleted_at' => date('Y-m-d H:i:s')]);
+        if ($this->db->affected_rows() > 0) {
+            $this->swal('Berhasil', 'success', 'Berhasl hapus syarat layanan');
+        } else {
+            $this->swal('Gagal', 'error', 'Gagal hapus syarat layanan');
+        }
+    }
+
+    public function get_syarat_layanan_detail($id)
+    {
+        $this->db->select('s.*, l.nama_layanan')->from('master_syarat_layanan s')->join('master_layanan l', 's.id_layanan = l.id')->where('s.id', $id);
+        return $this->db->get()->row();
+    }
+
+    public function update_data_syarat_layanan($input)
+    {
+        $data = [
+            'syarat'     => $input->nama_syarat,
+            'keterangan' => $input->keterangan,
+            'status'     => $input->status,
+        ];
+        $this->db->where('id', $input->id_syarat);
+        $this->db->update('master_syarat_layanan', $data);
+        if ($this->db->affected_rows() > 0) {
+            $this->swal('Berhasil', 'success', 'Berhasl update syarat layanan');
+        } else {
+            $this->swal('Gagal', 'error', 'Tidak ada perubahan data');
         }
     }
 }

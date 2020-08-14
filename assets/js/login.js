@@ -28,11 +28,10 @@ $(document).ready(function() {
         let username = $("#username").val();
         let password = $("#password").val();
         if (username != '' && password != '') {
-            $.post("/login-auth", {
+            $.post("/signin", {
                 username: username,
                 password: password
             }, function(result) {
-                console.log(result);
                 Swal.fire(result)
                 if (result.icon == 'success') {
                     setTimeout(function() {

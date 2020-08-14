@@ -44,15 +44,15 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="<?= base_url() ?>assets/img/logo.png" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Nama User Login</span>
+                                <span class="hidden-xs"><?= $this->session->real_name ?></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="user-header">
                                     <img src="<?= base_url() ?>assets/img/logo.png" class="img-circle" alt="User Image">
 
                                     <p>
-                                        Nama User Login - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        <?= $this->session->real_name ?>
+                                        <small>Administrator</small>
                                     </p>
                                 </li>
                                 <li class="user-footer">
@@ -76,80 +76,15 @@
                         <img src="<?= base_url() ?>assets/img/logo.png" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Nama User Login</p>
+                        <p><?= $this->session->real_name ?></p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li onclick="render_page('dashboard')"><a href="javascript:;"><i class="fa fa-home text-aqua"></i> <span>DASHBOARD</span></a></li>
+                    <li onclick="render_page('data_layanan')"><a href="javascript:;"><i class="fa fa-pencil-square-o text-lime"></i> <span>DATA LAYANAN</span></a></li>
                     <li onclick="render_page('data_admin')"><a href="javascript:;"><i class="fa fa-user-plus text-yellow"></i> <span>DATA ADMIN</span></a></li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-qrcode text-teal"></i> <span>TABUNGAN</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li onclick="render_page('data-simpanan')"><a href="javascript:;"><i class="fa fa-download"></i> SIMPANAN</a></li>
-                            <li onclick="render_page('data-penarikan')"><a href="javascript:;"><i class="fa fa-upload"></i> PENARIKAN</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-pencil-square-o text-lime"></i> <span>PINJAMAN</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li onclick="render_page('data-pinjaman')"><a href="javascript:;"><i class="fa fa-file-excel-o"></i> DATA PINJAMAN</a></li>
-                            <li onclick="render_page('data-angsuran')"><a href="javascript:;"><i class="fa fa-file-archive-o"></i> DATA ANGSURAN</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-file text-yellow"></i> <span>MASTER DATA</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li onclick="render_page('data-jenis-transaksi')"><a href="javascript:;"><i class="fa fa-database"></i> DATA JENIS TRANSAKSI</a></li>
-                            <li onclick="render_page('data-waktu-angsuran')"><a href="javascript:;"><i class="fa fa-book"></i> DATA LAMA ANGSURAN</a></li>
-                            <li onclick="render_page('data-kas')"><a href="javascript:;"><i class="fa fa-book"></i> DATA KAS</a></li>
-                            <li onclick="render_page('data-anggota')"><a href="javascript:;"><i class="fa fa-user-plus"></i> DATA ANGGOTA</a></li>
-                            <li onclick="render_page('data-pekerjaan')"><a href="javascript:;"><i class="fa fa-handshake-o"></i> DATA PEKERJAAN</a></li>
-                            <li onclick="render_page('data-agama')"><a href="javascript:;"><i class="fa fa-balance-scale"></i> DATA AGAMA</a></li>
-                            <li onclick="render_page('data-user')"><a href="javascript:;"><i class="fa fa-group"></i> DATA PENGGUNA</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-file-pdf-o text-yellow"></i> <span>LAPORAN</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li onclick="render_page('lap-anggota')"><a href="javascript:;"><i class="fa fa-folder-open-o"></i> LAP. ANGGOTA</a></li>
-                            <li onclick="render_page('lap-simpanan')"><a href="javascript:;"><i class="fa fa-folder-open-o"></i> LAP. SIMPANAN</a></li>
-                            <li onclick="render_page('lap-pinjaman')"><a href="javascript:;"><i class="fa fa-folder-open-o"></i> LAP. PINJAMAN</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-cogs text-fuchsia"></i> <span>PENGATURAN</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li onclick="render_page('data-identitas')"><a href="javascript:;"><i class="fa fa-chain"></i> IDENTITAS</a></li>
-                            <li onclick="render_page('data-biaya')"><a href="javascript:;"><i class="fa fa-money"></i> BIAYA</a></li>
-                        </ul>
-                    </li>
                 </ul>
             </section>
         </aside>

@@ -53,6 +53,10 @@ $route['default_controller'] = 'main';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = true;
 
+$route['login'] = 'auth';
+$route['signin'] = 'auth/process';
+$route['logout'] = 'auth/out';
+
 /*
 | -------------------------------------------------------------------------
 | Sample REST API Routes

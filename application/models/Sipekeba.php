@@ -164,6 +164,16 @@ class Sipekeba extends MY_Model
             $this->swal('Gagal', 'error', 'Tidak ada perubahan data');
         }
     }
+
+    public function get_list_layanan_all()
+    {
+        $this->db->select('id, nama_layanan, keterangan');
+        $data = $this->db->get_where('master_layanan', ['deleted_at' => null, 'status' => 1])->result();
+        foreach ($data as $key) {
+            $key->list_syarat = $this->db->select('id as id_syarat, syarat')->get_where('master_syarat_layanan', ['deleted_at' => null, 'id_layanan' => $key->id, 'status' => 1])->result();
+        }
+        return $data;
+    }
 }
 
 /* End of file Sipekeba.php */

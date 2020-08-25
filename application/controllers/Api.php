@@ -38,21 +38,35 @@ class Api extends CI_Controller
     public function login_post()
     {
         $email = $this->post('email');
-        $password = $this->post('password');
+        $password = $this->post('pass');
         $check = $this->spkb->check_api_login($email, $password);
         if ($check) {
             $token = JWT::generateToken(['email' => $email, 'started_at' => date('YmdHis')]);
-            $response = ['code' => 200, 'message' => 'Successful', 'data' => ['token' => $token]];
+            $response = ['code' => 200, 'message' => 'Successful', 'data' => ['status' => true, 'token' => $token, 'id_user' => $check->id_user]];
             $this->response($response, 200);
             return;
         }
         $this->response(['code' => 404, 'message' => 'Invalid username or password!'], 200);
     }
 
+    public function signup_post()
+    {
+        $input = $this->post();
+        $check = $this->spkb->check_api_signup($input);
+        if ($check) {
+            $token = JWT::generateToken(['user' => $this->post('email'), 'started_at' => date('YmdHis')]);
+            $response = ['code' => 200, 'message' => 'Successful', 'data' => ['status' => true, 'token' => $token, 'id_user' => $check['id_user']]];
+            $this->response($response, 200);
+            return;
+        }
+        $this->response(['code' => 404, 'message' => 'Email has been used!'], 200);
+    }
+
     public function list_layanan_post()
     {
         $this->verify_request();
-        $layanan = $this->spkb->get_list_layanan_all();
+        $id = $this->post('id');
+        $layanan = $this->spkb->get_list_layanan_all($id);
         $this->response(['code' => 200, 'message' => 'Successful', 'data' => ['list' => $layanan]], 200);
     }
 
@@ -85,6 +99,28 @@ class Api extends CI_Controller
         $token = JWT::generateToken(['started_at' => date('YmdHis'), 'public' => true]);
         $response = ['code' => 200, 'message' => 'Successful', 'data' => ['token' => $token]];
         $this->response($response, 200);
+    }
+
+    public function buat_laporan_post()
+    {
+        $this->verify_request();
+        $input = $this->post();
+        $result = $this->spkb->buat_laporan($input);
+        $this->response(['code' => 200, 'message' => 'Successful', 'status' => true, 'data' => ['id_laporan' => $result['id_laporan']]], 200);
+    }
+
+    public function user_profile_post()
+    {
+        $this->verify_request();
+        $id = $this->post('id');
+        $data = $this->spkb->get_user_detail($id);
+        $this->response(['code' => 200, 'message' => 'Successful', 'data' => $data], 200);
+    }
+
+    public function upload_image_post()
+    {
+        $id_laporan = $this->post('id_laporan');
+        $this->spkb->check_upload($id_laporan);
     }
 }
 

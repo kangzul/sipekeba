@@ -34,8 +34,8 @@
                             <td>$status</td>
                             <td>".date('j F Y', strtotime($key->created_at))."</td>
                             <td>
-                                <button class='btn btn-xs btn-info edit' data-id='$key->id_user'> EDIT</button>
-                                <button class='btn btn-xs btn-danger hapus' data-id='$key->id_user'> HAPUS</button>
+                                <button class='btn btn-xs btn-info edit' data-id='$key->id_admin'> EDIT</button>
+                                <button class='btn btn-xs btn-danger hapus' data-id='$key->id_admin'> HAPUS</button>
                             </td>
                         </tr>";
                         $no++;
@@ -53,6 +53,6 @@
     })
     $('.edit').click(function () {
         var id = $(this).data('id')
-        render_page('edit_user?id='+id)
+        render_page('edit_admin?id='+id)
     })
 </script>

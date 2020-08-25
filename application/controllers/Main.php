@@ -1,10 +1,11 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Main extends CI_Controller {
+class Main extends CI_Controller
+{
 
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -16,15 +17,15 @@ class Main extends CI_Controller {
     {
         $sesi_login = $this->session->logged_in;
         if ($sesi_login != true) {
-            redirect('login','refresh');
+            redirect('login', 'refresh');
         }
-        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             return;
         } else {
             if ($this->uri->segment(2) == FALSE) {
                 return;
             } else {
-                echo json_encode(["message" => "You dont have permission to this page"]); 
+                echo json_encode(["message" => "You dont have permission to this page"]);
                 exit;
             }
         }
@@ -93,6 +94,12 @@ class Main extends CI_Controller {
         $this->spkb->hapus_layanan($id);
     }
 
+    public function hapus_pengguna()
+    {
+        $id = $this->input->post('id');
+        $this->spkb->hapus_pengguna($id);
+    }
+
     public function data_syarat_layanan()
     {
         $id = $this->input->get('id');
@@ -133,6 +140,23 @@ class Main extends CI_Controller {
         $this->spkb->update_data_syarat_layanan($input);
     }
 
+    public function validasi_laporan()
+    {
+        $id = $this->input->post('id');
+        $this->spkb->validasi_laporan($id);
+    }
+
+    public function data_laporan()
+    {
+        $data['list'] = $this->spkb->get_laporan_list();
+        $this->load->view('data_laporan', $data);
+    }
+
+    public function data_pengguna()
+    {
+        $data['list'] = $this->spkb->get_pengguna_list();
+        $this->load->view('data_pengguna', $data);
+    }
 }
 
 /* End of file Main.php */

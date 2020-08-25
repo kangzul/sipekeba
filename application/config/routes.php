@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = true;
 $route['login'] = 'auth';
 $route['signin'] = 'auth/process';
 $route['logout'] = 'auth/out';
+$route['surat/(:num)'] = 'auth/pdf_surat/$1';
 
 /*
 | -------------------------------------------------------------------------

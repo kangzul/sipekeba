@@ -83,7 +83,9 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li onclick="render_page('dashboard')"><a href="javascript:;"><i class="fa fa-home text-aqua"></i> <span>DASHBOARD</span></a></li>
+                    <li onclick="render_page('data_laporan')"><a href="javascript:;"><i class="fa fa-briefcase text-red"></i> <span>DATA LAPORAN</span></a></li>
                     <li onclick="render_page('data_layanan')"><a href="javascript:;"><i class="fa fa-pencil-square-o text-lime"></i> <span>DATA LAYANAN</span></a></li>
+                    <li onclick="render_page('data_pengguna')"><a href="javascript:;"><i class="fa fa-group text-cyan"></i> <span>DATA PENGGUNA</span></a></li>
                     <li onclick="render_page('data_admin')"><a href="javascript:;"><i class="fa fa-user-plus text-yellow"></i> <span>DATA ADMIN</span></a></li>
                 </ul>
             </section>

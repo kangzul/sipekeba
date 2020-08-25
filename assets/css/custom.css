@@ -36,8 +36,7 @@
     background-color: #d2d6de !important;
 }
 
-table.dataTable>thead>tr,
-table.dataTable>tfoot>tr {
+table.dataTable>thead>tr, table.dataTable>tfoot>tr {
     background-color: #008080;
     color: #fefefe;
 }
@@ -45,4 +44,10 @@ table.dataTable>tfoot>tr {
 .td-row {
     display: flex;
     justify-content: space-between;
+}
+
+span.sp {
+    display: block;
+    color: #33b5e5;
+    cursor: pointer;
 }
